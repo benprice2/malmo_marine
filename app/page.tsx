@@ -39,10 +39,10 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
             <div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-gray-800">
-                WHERE'S YOUR <span className="text-[#E91E63]">SEAMEN</span>
+                WHERE&apos;S YOUR <span className="text-[#E91E63]">SEAMEN</span>
               </h1>             
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-gray-800">
-                WHEN YOU <span className="text-[#E91E63]">NEED'EM?</span>
+                WHEN YOU <span className="text-[#E91E63]">NEED&apos;EM?</span>
               </h1>
               <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8">
                 Connecting marine professionals with the best opportunities across New Zealand.
