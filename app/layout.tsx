@@ -17,7 +17,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Malmo's Marine | Marine Industry Job Platform",
+  title: "Malmo Marine | Marine Industry Job Platform",
   description: "Find your next marine job or hire qualified marine professionals in New Zealand",
 };
 
