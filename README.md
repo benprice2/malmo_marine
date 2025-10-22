@@ -2,7 +2,7 @@
 
 ![Malmo's Marine](https://example.com/hero-image.jpg)
 
-A modern web application built with Next.js.14, TypeScript, Tailwind CSS, and Prisma for connecting marine professionals with job opportunities across New Zealand.
+A modern web application built with Next.js.14, TypeScript, and Tailwind CSS for connecting marine professionals with job opportunities across New Zealand.
 
 ## Features
 
@@ -10,21 +10,19 @@ A modern web application built with Next.js.14, TypeScript, Tailwind CSS, and Pr
 - **Employer Dashboard**: Post jobs, manage listings, and view applicants
 - **Employee Dashboard**: Browse jobs, apply, and track applications
 - **Responsive Design**: Mobile-friendly interface with modern UI/UX
-- **Database Integration**: Prisma ORM with PostgreSQL for data management
+- **Database Integration**: (To be implemented in future versions)
 
 ## Tech Stack
 
 - **Frontend**: Next.js.14, TypeScript, Tailwind CSS
 - **Authentication**: NextAuth.js
-- **Database**: PostgreSQL with Prisma ORM
-- **Deployment**: Vercel (Frontend/Backend), Supabase or Railway (Database)
+- **Deployment**: Vercel (Frontend/Backend)
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js 18+ and npm
-- PostgreSQL database
 
 ### Installation
 
@@ -44,18 +42,11 @@ npm install
 3. Create a `.env` file in the root directory with the following variables:
 
 ```
-DATABASE_URL="postgresql://username:password@localhost:5432/malmo_marine"
 NEXTAUTH_URL="http://localhost:3000"
 NEXTAUTH_SECRET="your-secret-key"
 ```
 
-4. Set up the database:
-
-```bash
-npx prisma migrate dev --name init
-```
-
-5. Start the development server:
+4. Start the development server:
 
 ```bash
 npm run dev
@@ -71,19 +62,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 2. Set up the environment variables in the Vercel dashboard
 3. Deploy the application
 
-### Database Deployment
+### Database
 
-#### Option 1: Supabase
-
-1. Create a Supabase account and project
-2. Get your PostgreSQL connection string
-3. Update the `DATABASE_URL` environment variable in Vercel
-
-#### Option 2: Railway
-
-1. Create a Railway account and provision a PostgreSQL database
-2. Get your PostgreSQL connection string
-3. Update the `DATABASE_URL` environment variable in Vercel
+Database functionality will be implemented in future versions.
 
 ## Project Structure
 
@@ -95,7 +76,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 │   ├── employer/          # Employer dashboard pages
 │   ├── employee/          # Employee dashboard pages
 │   └── ...                # Other app files
-├── prisma/                # Prisma schema and migrations
 ├── public/                # Static assets
 ├── types/                 # TypeScript type definitions
 └── ...                    # Config files
