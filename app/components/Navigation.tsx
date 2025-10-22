@@ -14,7 +14,7 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="bg-white shadow-sm">
+    <nav className="bg-white shadow-sm relative z-20">
       <div className="container-custom mx-auto">
         <div className="flex justify-between items-center py-4">
           <Logo />
@@ -76,10 +76,12 @@ const Navigation = () => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden z-30">
             <button
               onClick={toggleMenu}
-              className="text-gray-700 focus:outline-none"
+              className="text-gray-700 hover:text-[#E91E63] p-1 rounded-md transition-colors"
+              aria-label="Toggle menu"
+              aria-expanded={isMenuOpen}
             >
               <svg
                 className="w-6 h-6"
@@ -107,96 +109,100 @@ const Navigation = () => {
             </button>
           </div>
         </div>
+      </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden pb-4">
-            {!session ? (
-              <div className="flex flex-col space-y-3">
-                <Link
-                  href="/auth/signin"
-                  className="block py-2 px-4 text-gray-700 hover:bg-gray-100"
-                  onClick={toggleMenu}
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href="/auth/signup"
-                  className="block py-2 px-4 text-gray-700 hover:bg-gray-100"
-                  onClick={toggleMenu}
-                >
-                  Sign Up
-                </Link>
-              </div>
-            ) : session.user.role === "EMPLOYER" ? (
-              <div className="flex flex-col space-y-3">
-                <Link
-                  href="/employer/jobs"
-                  className="block py-2 px-4 text-gray-700 hover:bg-gray-100"
-                  onClick={toggleMenu}
-                >
-                  My Jobs
-                </Link>
-                <Link
-                  href="/employer/create-job"
-                  className="block py-2 px-4 text-gray-700 hover:bg-gray-100"
-                  onClick={toggleMenu}
-                >
-                  Create Job
-                </Link>
-                <Link
-                  href="/employer/applicants"
-                  className="block py-2 px-4 text-gray-700 hover:bg-gray-100"
-                  onClick={toggleMenu}
-                >
-                  Applicants
-                </Link>
-                <button
-                  onClick={() => {
-                    signOut({ callbackUrl: "/" });
-                    toggleMenu();
-                  }}
-                  className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100"
-                >
-                  Sign Out
-                </button>
-              </div>
-            ) : (
-              <div className="flex flex-col space-y-3">
-                <Link
-                  href="/employee/jobs"
-                  className="block py-2 px-4 text-gray-700 hover:bg-gray-100"
-                  onClick={toggleMenu}
-                >
-                  Browse Jobs
-                </Link>
-                <Link
-                  href="/employee/applications"
-                  className="block py-2 px-4 text-gray-700 hover:bg-gray-100"
-                  onClick={toggleMenu}
-                >
-                  My Applications
-                </Link>
-                <Link
-                  href="/employee/profile"
-                  className="block py-2 px-4 text-gray-700 hover:bg-gray-100"
-                  onClick={toggleMenu}
-                >
-                  Profile
-                </Link>
-                <button
-                  onClick={() => {
-                    signOut({ callbackUrl: "/" });
-                    toggleMenu();
-                  }}
-                  className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100"
-                >
-                  Sign Out
-                </button>
-              </div>
-            )}
-          </div>
-        )}
+      {/* Mobile Navigation Overlay */}
+      
+      {/* Mobile Menu */}
+      <div 
+        className={`absolute top-full left-0 right-0 bg-white shadow-md border-t border-gray-100 z-20 transform transition-all duration-300 ease-in-out origin-top ${isMenuOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'}`}
+      >
+        <div className="container-custom mx-auto py-2">
+          {!session ? (
+            <div className="flex flex-col space-y-3 py-2">
+              <Link
+                href="/auth/signin"
+                className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                onClick={toggleMenu}
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/auth/signup"
+                className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                onClick={toggleMenu}
+              >
+                Sign Up
+              </Link>
+            </div>
+          ) : session.user.role === "EMPLOYER" ? (
+            <div className="flex flex-col space-y-3 py-2">
+              <Link
+                href="/employer/jobs"
+                className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                onClick={toggleMenu}
+              >
+                My Jobs
+              </Link>
+              <Link
+                href="/employer/create-job"
+                className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                onClick={toggleMenu}
+              >
+                Create Job
+              </Link>
+              <Link
+                href="/employer/applicants"
+                className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                onClick={toggleMenu}
+              >
+                Applicants
+              </Link>
+              <button
+                onClick={() => {
+                  signOut({ callbackUrl: "/" });
+                  toggleMenu();
+                }}
+                className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col space-y-3 py-2">
+              <Link
+                href="/employee/jobs"
+                className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                onClick={toggleMenu}
+              >
+                Browse Jobs
+              </Link>
+              <Link
+                href="/employee/applications"
+                className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                onClick={toggleMenu}
+              >
+                My Applications
+              </Link>
+              <Link
+                href="/employee/profile"
+                className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                onClick={toggleMenu}
+              >
+                Profile
+              </Link>
+              <button
+                onClick={() => {
+                  signOut({ callbackUrl: "/" });
+                  toggleMenu();
+                }}
+                className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+              >
+                Sign Out
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );

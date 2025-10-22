@@ -43,11 +43,11 @@ body {
 
 @layer components {
   .btn-primary {
-    @apply bg-[#E91E63] text-white font-medium py-2 px-6 rounded-md hover:bg-[#C2185B] transition-colors;
+    @apply bg-[#E91E63] text-white font-medium py-2 px-4 sm:px-6 rounded-md hover:bg-[#C2185B] transition-colors text-sm sm:text-base w-full sm:w-auto flex justify-center items-center;
   }
   
   .btn-outline {
-    @apply border border-[#E91E63] text-[#E91E63] font-medium py-2 px-6 rounded-md hover:bg-[#E91E63] hover:text-white transition-colors;
+    @apply border border-[#E91E63] text-[#E91E63] font-medium py-2 px-4 sm:px-6 rounded-md hover:bg-[#E91E63] hover:text-white transition-colors text-sm sm:text-base w-full sm:w-auto flex justify-center items-center;
   }
   
   .container-custom {

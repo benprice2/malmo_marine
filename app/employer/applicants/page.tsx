@@ -68,12 +68,25 @@ function ApplicantsList() {
   
   const [selectedJobId, setSelectedJobId] = useState<string | null>(jobIdParam);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (jobIdParam) {
       setSelectedJobId(jobIdParam);
     }
   }, [jobIdParam]);
+  
+  // Simulate loading data from an API
+  useEffect(() => {
+    setIsLoading(true);
+    
+    // Simulate API call delay
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+    
+    return () => clearTimeout(timer);
+  }, [selectedJobId, searchTerm]);
 
   const filteredApplicants = selectedJobId
     ? mockApplicants
@@ -103,15 +116,15 @@ function ApplicantsList() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">
+      <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">
         {selectedJobId 
           ? `Applicants for ${getJobTitle(selectedJobId)}`
           : "All Applicants"
         }
       </h1>
       
-      <div className="mb-6 flex flex-col sm:flex-row gap-4">
-        <div className="sm:w-1/3">
+      <div className="mb-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="sm:col-span-1">
           <label htmlFor="job-filter" className="block text-sm font-medium text-gray-700 mb-1">
             Filter by Job
           </label>
@@ -119,7 +132,7 @@ function ApplicantsList() {
             id="job-filter"
             value={selectedJobId || ""}
             onChange={(e) => setSelectedJobId(e.target.value || null)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63] text-gray-500"
+            className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63] text-gray-500 text-sm sm:text-base"
           >
             <option value="">All Jobs</option>
             {mockJobs.map(job => (
@@ -130,7 +143,7 @@ function ApplicantsList() {
           </select>
         </div>
         
-        <div className="sm:w-2/3">
+        <div className="sm:col-span-2">
           <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-1">
             Search Applicants
           </label>
@@ -140,12 +153,16 @@ function ApplicantsList() {
             placeholder="Search by name or email..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63] text-gray-500"
+            className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63] text-gray-500 text-sm sm:text-base"
           />
         </div>
       </div>
       
-      {filteredApplicants.length === 0 ? (
+      {isLoading ? (
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#E91E63]"></div>
+        </div>
+      ) : filteredApplicants.length === 0 ? (
         <div className="text-center py-8">
           <p className="text-gray-500">No applicants found.</p>
           {(selectedJobId || searchTerm) && (
@@ -164,70 +181,127 @@ function ApplicantsList() {
           )}
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Applicant
-                </th>
-                {!selectedJobId && (
+        <>
+          {/* Table view for medium and larger screens */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Job
+                    Applicant
                   </th>
-                )}
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Applied On
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  CV
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {filteredApplicants.map((applicant) => (
-                <tr key={applicant.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex flex-col">
-                      <div className="text-sm font-medium text-gray-900">{applicant.name}</div>
-                      <div className="text-sm text-gray-500">{applicant.email}</div>
-                    </div>
-                  </td>
                   {!selectedJobId && (
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{getJobTitle(applicant.jobId)}</div>
-                    </td>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Job
+                    </th>
                   )}
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{formatDate(applicant.appliedAt)}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Applied On
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    CV
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {filteredApplicants.map((applicant) => (
+                  <tr key={applicant.id}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex flex-col">
+                        <div className="text-sm font-medium text-gray-900">{applicant.name}</div>
+                        <div className="text-sm text-gray-500">{applicant.email}</div>
+                      </div>
+                    </td>
+                    {!selectedJobId && (
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">{getJobTitle(applicant.jobId)}</div>
+                      </td>
+                    )}
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">{formatDate(applicant.appliedAt)}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {applicant.cvUrl ? (
+                        <a
+                          href={applicant.cvUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#E91E63] hover:underline"
+                        >
+                          View CV
+                        </a>
+                      ) : (
+                        <span className="text-gray-500">Not provided</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                      <button className="text-[#E91E63] hover:underline mr-4">
+                        Contact
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          
+          {/* Card view for small screens */}
+          <div className="md:hidden space-y-4">
+            {filteredApplicants.map((applicant) => (
+              <div key={applicant.id} className="bg-white rounded-lg shadow-sm p-4 border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                <div className="mb-4 pb-2 border-b border-gray-100">
+                  <h3 className="text-lg font-medium text-gray-900 mb-1">{applicant.name}</h3>
+                  <p className="text-sm text-gray-500">{applicant.email}</p>
+                </div>
+                
+                {!selectedJobId && (
+                  <div className="flex flex-wrap items-center justify-between py-2 border-b border-gray-100">
+                    <span className="text-xs font-medium text-gray-500 uppercase w-1/3">Job</span>
+                    <span className="text-sm text-gray-900 w-2/3 text-right">{getJobTitle(applicant.jobId)}</span>
+                  </div>
+                )}
+                
+                <div className="flex flex-wrap items-center justify-between py-2 border-b border-gray-100">
+                  <span className="text-xs font-medium text-gray-500 uppercase w-1/3">Applied On</span>
+                  <span className="text-sm text-gray-900 w-2/3 text-right">{formatDate(applicant.appliedAt)}</span>
+                </div>
+                
+                <div className="flex flex-wrap items-center justify-between py-2 border-b border-gray-100">
+                  <span className="text-xs font-medium text-gray-500 uppercase w-1/3">CV</span>
+                  <span className="w-2/3 text-right">
                     {applicant.cvUrl ? (
                       <a
                         href={applicant.cvUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#E91E63] hover:underline"
+                        className="text-sm text-[#E91E63] hover:underline inline-flex items-center"
                       >
-                        View CV
+                        <span>View CV</span>
+                        <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
                       </a>
                     ) : (
-                      <span className="text-gray-500">Not provided</span>
+                      <span className="text-sm text-gray-500">Not provided</span>
                     )}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <button className="text-[#E91E63] hover:underline mr-4">
-                      Contact
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </span>
+                </div>
+                
+                <div className="mt-4 pt-1 flex justify-end">
+                  <button className="px-4 py-2 text-sm text-[#E91E63] hover:bg-[#FCE4EC] rounded-md transition-colors flex items-center">
+                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    Contact
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

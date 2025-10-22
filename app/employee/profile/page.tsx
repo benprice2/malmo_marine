@@ -57,7 +57,7 @@ export default function Profile() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63]"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63] text-gray-500"
             />
           </div>
           
@@ -71,7 +71,7 @@ export default function Profile() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63]"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63] text-gray-500"
             />
           </div>
           
@@ -85,7 +85,7 @@ export default function Profile() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63]"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63] text-gray-500"
             />
           </div>
           
@@ -99,7 +99,7 @@ export default function Profile() {
               name="location"
               value={formData.location}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63]"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63] text-gray-500"
             />
           </div>
           
@@ -113,7 +113,7 @@ export default function Profile() {
               name="cvUrl"
               value={formData.cvUrl}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63]"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63] text-gray-500"
               placeholder="https://example.com/your-cv.pdf"
             />
             <p className="mt-1 text-sm text-gray-500">
@@ -131,7 +131,7 @@ export default function Profile() {
               rows={4}
               value={formData.bio}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63]"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63] text-gray-500"
               placeholder="Tell employers about your experience and skills..."
             ></textarea>
           </div>
