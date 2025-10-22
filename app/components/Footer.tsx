@@ -7,8 +7,8 @@ const Footer = () => {
   return (
     <footer className="bg-gray-50 pt-12 pb-8">
       <div className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="col-span-1 md:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+          <div className="col-span-1 md:col-span-5">
             <Logo className="mb-4" />
             <p className="text-gray-600 mb-4">
               Connecting marine professionals with the best opportunities across New Zealand.
@@ -67,7 +67,30 @@ const Footer = () => {
             </div>
           </div>
           
-          <div>
+          <div className="col-span-1 md:col-span-2">
+            <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
+              Company
+            </h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/roadmap" className="text-gray-600 hover:text-[#E91E63]">
+                  Roadmap
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="text-gray-600 hover:text-[#E91E63]">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="text-gray-600 hover:text-[#E91E63]">
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
+          
+          <div className="col-span-1 md:col-span-2">
             <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
               For Employers
             </h3>
@@ -90,7 +113,7 @@ const Footer = () => {
             </ul>
           </div>
           
-          <div>
+          <div className="col-span-1 md:col-span-3">
             <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
               For Job Seekers
             </h3>
@@ -116,7 +139,7 @@ const Footer = () => {
         
         <div className="mt-8 pt-8 border-t border-gray-200">
           <p className="text-sm text-gray-400 text-center">
-            &copy; {new Date().getFullYear()} Malmo&apos;s Marine. All rights reserved.
+            &copy; {new Date().getFullYear()} Malmo Marine. All rights reserved.
           </p>
         </div>
       </div>

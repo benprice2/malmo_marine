@@ -19,6 +19,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Malmo Marine | Marine Industry Job Platform",
   description: "Find your next marine job or hire qualified marine professionals in New Zealand",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
 };
 
 export default function RootLayout({

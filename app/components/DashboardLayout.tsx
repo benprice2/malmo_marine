@@ -39,7 +39,7 @@ const DashboardLayout = ({
 
   return (
     <MainLayout>
-      <div className="flex min-h-[calc(100vh-4rem)]">
+      <div className="flex min-h-[calc(100vh-16rem)]">
         {/* Sidebar */}
         <div className={`bg-white border-r border-gray-200 transition-all duration-300 flex flex-col ${collapsed ? "w-16" : "w-64"}`}>
           <div className="p-4 border-b border-gray-200 flex items-center justify-between">

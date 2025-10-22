@@ -63,7 +63,7 @@ function SignInForm() {
           <div className="text-center">
             <h2 className="text-3xl font-bold text-gray-900">Sign In</h2>
             <p className="mt-2 text-sm text-gray-600">
-              Welcome back to Malmo&apos;s Marine
+              Welcome back to Malmo Marine
             </p>
           </div>
           

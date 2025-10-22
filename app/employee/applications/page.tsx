@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // Mock data for applications
@@ -45,6 +45,19 @@ const mockApplications = [
 
 export default function MyApplications() {
   const [statusFilter, setStatusFilter] = useState("ALL");
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // Simulate loading data from an API
+  useEffect(() => {
+    setIsLoading(true);
+    
+    // Simulate API call delay
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+    
+    return () => clearTimeout(timer);
+  }, [statusFilter]);
   
   const filteredApplications = statusFilter === "ALL"
     ? mockApplications
@@ -92,27 +105,38 @@ export default function MyApplications() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">My Applications</h1>
+      <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">My Applications</h1>
       
       <div className="mb-6">
         <label htmlFor="status-filter" className="block text-sm font-medium text-gray-700 mb-1">
           Filter by Status
         </label>
-        <select
-          id="status-filter"
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-          className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63] text-gray-500"
-        >
-          <option value="ALL" className="text-gray-500">All Applications</option>
-          <option value="PENDING" className="text-gray-500">Pending</option>
-          <option value="VIEWED" className="text-gray-500">Viewed</option>
-          <option value="INTERVIEW" className="text-gray-500">Interview</option>
-          <option value="REJECTED" className="text-gray-500">Rejected</option>
-        </select>
+        <div className="relative">
+          <select
+            id="status-filter"
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="w-full sm:w-64 px-3 sm:px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#E91E63] focus:border-[#E91E63] text-gray-500 text-sm sm:text-base appearance-none"
+          >
+            <option value="ALL" className="text-gray-500">All Applications</option>
+            <option value="PENDING" className="text-gray-500">Pending</option>
+            <option value="VIEWED" className="text-gray-500">Viewed</option>
+            <option value="INTERVIEW" className="text-gray-500">Interview</option>
+            <option value="REJECTED" className="text-gray-500">Rejected</option>
+          </select>
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
       </div>
       
-      {filteredApplications.length === 0 ? (
+      {isLoading ? (
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#E91E63]"></div>
+        </div>
+      ) : filteredApplications.length === 0 ? (
         <div className="text-center py-8">
           <p className="text-gray-500">No applications found.</p>
           {statusFilter !== "ALL" && (
@@ -130,56 +154,97 @@ export default function MyApplications() {
           </Link>
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Job
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Company
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Applied On
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {filteredApplications.map((application) => (
-                <tr key={application.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{application.jobTitle}</div>
-                    <div className="text-sm text-gray-500">{application.location}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{application.company}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{formatDate(application.appliedAt)}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {getStatusBadge(application.status)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <Link
-                      href={`/employee/jobs/${application.jobId}`}
-                      className="text-[#E91E63] hover:underline"
-                    >
-                      View Job
-                    </Link>
-                  </td>
+        <>
+          {/* Table view for medium and larger screens */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Job
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Company
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Applied On
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {filteredApplications.map((application) => (
+                  <tr key={application.id}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-gray-900">{application.jobTitle}</div>
+                      <div className="text-sm text-gray-500">{application.location}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">{application.company}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">{formatDate(application.appliedAt)}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {getStatusBadge(application.status)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                      <Link
+                        href={`/employee/jobs/${application.jobId}`}
+                        className="text-[#E91E63] hover:underline"
+                      >
+                        View Job
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          
+          {/* Card view for small screens */}
+          <div className="md:hidden space-y-4">
+            {filteredApplications.map((application) => (
+              <div key={application.id} className="bg-white rounded-lg shadow-sm p-4 border border-gray-200 hover:shadow-md transition-shadow duration-300">
+                <div className="mb-4 pb-2 border-b border-gray-100">
+                  <h3 className="text-lg font-medium text-gray-900 mb-1">{application.jobTitle}</h3>
+                  <p className="text-sm text-gray-500">{application.company}</p>
+                  <p className="text-xs text-gray-500 mt-1">{application.location}</p>
+                </div>
+                
+                <div className="flex flex-wrap items-center justify-between py-2 border-b border-gray-100">
+                  <span className="text-xs font-medium text-gray-500 uppercase w-1/3">Applied On</span>
+                  <span className="text-sm text-gray-900 w-2/3 text-right">{formatDate(application.appliedAt)}</span>
+                </div>
+                
+                <div className="flex flex-wrap items-center justify-between py-2 border-b border-gray-100">
+                  <span className="text-xs font-medium text-gray-500 uppercase w-1/3">Status</span>
+                  <span className="w-2/3 text-right">
+                    {getStatusBadge(application.status)}
+                  </span>
+                </div>
+                
+                <div className="mt-4 pt-1 flex justify-end">
+                  <Link
+                    href={`/employee/jobs/${application.jobId}`}
+                    className="px-4 py-2 text-sm text-[#E91E63] hover:bg-[#FCE4EC] rounded-md transition-colors flex items-center"
+                  >
+                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    View Job
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
