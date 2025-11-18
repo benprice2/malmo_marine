@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 // Mock data for jobs
 const mockJobs = [
@@ -69,6 +70,8 @@ function ApplicantsList() {
   const [selectedJobId, setSelectedJobId] = useState<string | null>(jobIdParam);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [selectedApplicant, setSelectedApplicant] = useState<any>(null);
 
   useEffect(() => {
     if (jobIdParam) {
@@ -238,7 +241,13 @@ function ApplicantsList() {
                       )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <button className="text-[#E91E63] hover:underline mr-4">
+                      <button 
+                        className="text-[#E91E63] hover:underline mr-4"
+                        onClick={() => {
+                          setSelectedApplicant(applicant);
+                          setShowContactModal(true);
+                        }}
+                      >
                         Contact
                       </button>
                     </td>
@@ -291,7 +300,13 @@ function ApplicantsList() {
                 </div>
                 
                 <div className="mt-4 pt-1 flex justify-end">
-                  <button className="px-4 py-2 text-sm text-[#E91E63] hover:bg-[#FCE4EC] rounded-md transition-colors flex items-center">
+                  <button 
+                    className="px-4 py-2 text-sm text-[#E91E63] hover:bg-[#FCE4EC] rounded-md transition-colors flex items-center"
+                    onClick={() => {
+                      setSelectedApplicant(applicant);
+                      setShowContactModal(true);
+                    }}
+                  >
                     <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
@@ -302,6 +317,98 @@ function ApplicantsList() {
             ))}
           </div>
         </>
+      )}
+      
+      {/* Contact Modal */}
+      {showContactModal && selectedApplicant && (
+        <div 
+          className="fixed inset-0 backdrop-blur-sm bg-white/30 z-50 flex items-center justify-center p-4"
+          onClick={() => setShowContactModal(false)}
+        >
+          <div 
+            className="bg-white/95 backdrop-blur-md rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto border border-gray-100 animate-fadeIn motion-reduce:animate-none"
+            onClick={(e) => e.stopPropagation()}
+            style={{animation: 'fadeIn 0.2s ease-out, slideUp 0.2s ease-out'}}
+          >
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <h2 className="text-xl font-semibold text-gray-800">Contact {selectedApplicant.name}</h2>
+                <button 
+                  onClick={() => setShowContactModal(false)}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              
+              <div className="mb-6 flex items-center">
+                <div className="bg-gray-100 rounded-full w-14 h-14 flex items-center justify-center mr-3">
+                  <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-medium text-gray-900">{selectedApplicant.name}</h3>
+                  <p className="text-gray-600">{selectedApplicant.email}</p>
+                </div>
+              </div>
+              
+              <div className="mb-6">
+                <h3 className="font-medium text-gray-900 mb-2">Contact Information</h3>
+                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div className="grid grid-cols-1 gap-3">
+                    <div>
+                      <p className="text-sm text-gray-500">Phone</p>
+                      <p className="text-gray-800">+64 21 123 4567</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Email</p>
+                      <p className="text-gray-800">{selectedApplicant.email}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Best Contact Time</p>
+                      <p className="text-gray-800">Weekdays, 9am - 5pm</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">LinkedIn</p>
+                      <a href="#" className="text-[#E91E63] hover:underline">linkedin.com/in/{selectedApplicant.name.toLowerCase().replace(' ', '-')}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mb-6">
+                <h3 className="font-medium text-gray-900 mb-2">Notes</h3>
+                <p className="text-gray-600 text-sm">
+                  This candidate applied for {getJobTitle(selectedApplicant.jobId)} on {formatDate(selectedApplicant.appliedAt)}. 
+                  {selectedApplicant.cvUrl ? ' CV is available for review.' : ' No CV was provided.'}
+                </p>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-3 mt-6">
+                <button 
+                  onClick={() => {
+                    window.location.href = `mailto:${selectedApplicant.email}?subject=Your application for ${getJobTitle(selectedApplicant.jobId)}`;
+                  }}
+                  className="flex-1 bg-[#E91E63] text-white py-2 px-4 rounded-md hover:bg-[#C2185B] transition-colors flex items-center justify-center"
+                >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  Send Email
+                </button>
+                <button 
+                  onClick={() => setShowContactModal(false)}
+                  className="flex-1 border border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-50 transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

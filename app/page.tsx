@@ -52,7 +52,7 @@ export default function Home() {
                 <Link href="/auth/signup?role=employer" className="btn-primary text-center">
                   Post a Job
                 </Link>
-                <Link href="/auth/signup?role=employee" className="btn-outline text-center">
+                <Link href="/jobs" className="btn-outline text-center">
                   Find Jobs
                 </Link>
               </div>
@@ -107,7 +107,7 @@ export default function Home() {
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-xs sm:text-sm text-gray-500">{job.location}</span>
-                  <Link href={`/employee/jobs/${job.id}`} className="text-[#E91E63] text-sm sm:text-base font-medium hover:underline">
+                  <Link href={`/jobs/${job.id}`} className="text-[#E91E63] text-sm sm:text-base font-medium hover:underline">
                     View Details
                   </Link>
                 </div>
@@ -116,7 +116,7 @@ export default function Home() {
           </div>
           
           <div className="text-center mt-10">
-            <Link href="/employee/jobs" className="btn-outline">
+            <Link href="/jobs" className="btn-outline">
               View All Jobs
             </Link>
           </div>

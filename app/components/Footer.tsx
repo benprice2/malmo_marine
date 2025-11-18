@@ -50,20 +50,6 @@ const Footer = () => {
                   />
                 </svg>
               </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-[#E91E63]"
-                aria-label="Twitter"
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                </svg>
-              </a>
             </div>
           </div>
           
@@ -73,18 +59,18 @@ const Footer = () => {
             </h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/roadmap" className="text-gray-600 hover:text-[#E91E63]">
-                  Roadmap
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-gray-600 hover:text-[#E91E63]">
+                <Link href="/about" className="text-gray-600 hover:text-[#E91E63]">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-600 hover:text-[#E91E63]">
+                <Link href="/contact" className="text-gray-600 hover:text-[#E91E63]">
                   Contact
+                </Link>
+              </li>
+              <li>
+                <Link href="/feedback" className="text-gray-600 hover:text-[#E91E63]">
+                  Feedback
                 </Link>
               </li>
             </ul>
@@ -105,11 +91,6 @@ const Footer = () => {
                   Find Candidates
                 </Link>
               </li>
-              <li>
-                <Link href="#" className="text-gray-600 hover:text-[#E91E63]">
-                  Pricing
-                </Link>
-              </li>
             </ul>
           </div>
           
@@ -126,11 +107,6 @@ const Footer = () => {
               <li>
                 <Link href="/employee/jobs" className="text-gray-600 hover:text-[#E91E63]">
                   Browse Jobs
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-gray-600 hover:text-[#E91E63]">
-                  Career Resources
                 </Link>
               </li>
             </ul>

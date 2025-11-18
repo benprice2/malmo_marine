@@ -10,8 +10,7 @@ export const authOptions: NextAuthOptions = {
       name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-        role: { label: "Role", type: "text" },
+        password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
         // In production, you would:
@@ -20,6 +19,7 @@ export const authOptions: NextAuthOptions = {
         // 3. Return null if invalid
 
         if (!credentials?.email || !credentials?.password) {
+          console.log("Missing email or password");
           return null;
         }
 
@@ -44,9 +44,11 @@ export const authOptions: NextAuthOptions = {
         const user = mockUsers.find(user => user.email === credentials.email);
 
         if (user && credentials.password === "password") {
+          console.log("User authenticated successfully", user.email);
           return user;
         }
 
+        console.log("Authentication failed for", credentials.email);
         return null;
       },
     }),
@@ -79,7 +81,7 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-  secret: process.env.NEXTAUTH_SECRET || "your-secret-key",
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(authOptions);

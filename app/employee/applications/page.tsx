@@ -59,9 +59,32 @@ export default function MyApplications() {
     return () => clearTimeout(timer);
   }, [statusFilter]);
   
+  // Define the application type
+  type Application = {
+    id: string;
+    jobId: string;
+    jobTitle: string;
+    company: string;
+    location: string;
+    appliedAt: string;
+    status: string;
+  };
+
+  // Sort applications to put rejected ones at the bottom
+  const sortApplications = (applications: Application[]) => {
+    return [...applications].sort((a, b) => {
+      // If one is rejected and the other isn't, rejected goes to the bottom
+      if (a.status === "REJECTED" && b.status !== "REJECTED") return 1;
+      if (a.status !== "REJECTED" && b.status === "REJECTED") return -1;
+      
+      // Otherwise sort by date (newest first)
+      return new Date(b.appliedAt).getTime() - new Date(a.appliedAt).getTime();
+    });
+  };
+  
   const filteredApplications = statusFilter === "ALL"
-    ? mockApplications
-    : mockApplications.filter(app => app.status === statusFilter);
+    ? sortApplications(mockApplications)
+    : sortApplications(mockApplications.filter(app => app.status === statusFilter));
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -93,9 +116,10 @@ export default function MyApplications() {
           </span>
         );
       case "REJECTED":
+        // Display a muted "Expired" badge for rejected applications
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-            Rejected
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+            Expired
           </span>
         );
       default:
@@ -122,7 +146,7 @@ export default function MyApplications() {
             <option value="PENDING" className="text-gray-500">Pending</option>
             <option value="VIEWED" className="text-gray-500">Viewed</option>
             <option value="INTERVIEW" className="text-gray-500">Interview</option>
-            <option value="REJECTED" className="text-gray-500">Rejected</option>
+            <option value="REJECTED" className="text-gray-500">Expired</option>
           </select>
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -179,7 +203,10 @@ export default function MyApplications() {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredApplications.map((application) => (
-                  <tr key={application.id}>
+                  <tr 
+                    key={application.id} 
+                    className={application.status === "REJECTED" ? "opacity-60 grayscale" : ""}
+                  >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">{application.jobTitle}</div>
                       <div className="text-sm text-gray-500">{application.location}</div>
@@ -210,7 +237,10 @@ export default function MyApplications() {
           {/* Card view for small screens */}
           <div className="md:hidden space-y-4">
             {filteredApplications.map((application) => (
-              <div key={application.id} className="bg-white rounded-lg shadow-sm p-4 border border-gray-200 hover:shadow-md transition-shadow duration-300">
+              <div 
+                key={application.id} 
+                className={`bg-white rounded-lg shadow-sm p-4 border border-gray-200 hover:shadow-md transition-shadow duration-300 ${application.status === "REJECTED" ? "opacity-60 grayscale" : ""}`}
+              >
                 <div className="mb-4 pb-2 border-b border-gray-100">
                   <h3 className="text-lg font-medium text-gray-900 mb-1">{application.jobTitle}</h3>
                   <p className="text-sm text-gray-500">{application.company}</p>

@@ -121,6 +121,34 @@ const Navigation = () => {
           {!session ? (
             <div className="flex flex-col space-y-3 py-2">
               <Link
+                href="/"
+                className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                onClick={toggleMenu}
+              >
+                Home
+              </Link>
+              <Link
+                href="/about"
+                className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                onClick={toggleMenu}
+              >
+                About
+              </Link>
+              <Link
+                href="/jobs"
+                className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                onClick={toggleMenu}
+              >
+                Jobs
+              </Link>
+              <Link
+                href="/contact"
+                className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                onClick={toggleMenu}
+              >
+                Contact
+              </Link>
+              <Link
                 href="/auth/signin"
                 className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
                 onClick={toggleMenu}

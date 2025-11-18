@@ -29,18 +29,25 @@ function SignInForm() {
     setFormError("");
     
     try {
+      console.log("Attempting to sign in with:", { email });
+      
       const result = await signIn("credentials", {
         redirect: false,
         email,
         password,
       });
 
+      console.log("Sign in result:", result);
+
       if (result?.error) {
-        setFormError("Invalid email or password");
+        console.error("Authentication error:", result.error);
+        setFormError(`Authentication failed: ${result.error}`);
         setIsLoading(false);
         return;
       }
 
+      console.log("Authentication successful, redirecting...");
+      
       // Redirect based on user role
       // In a real app, you'd get this from the session
       if (email === "employer@example.com") {
@@ -50,8 +57,9 @@ function SignInForm() {
       } else {
         router.push(callbackUrl);
       }
-    } catch (_error) {
-      setFormError("An error occurred. Please try again.");
+    } catch (error) {
+      console.error("Exception during sign in:", error);
+      setFormError(`An error occurred: ${error instanceof Error ? error.message : 'Unknown error'}`); 
       setIsLoading(false);
     }
   };
