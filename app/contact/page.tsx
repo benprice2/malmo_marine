@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import MainLayout from "../components/MainLayout";
 import { useSearchParams } from "next/navigation";
 
-export default function ContactUs() {
+function ContactUsContent() {
   const searchParams = useSearchParams();
   
   const [formData, setFormData] = useState({
@@ -104,7 +104,7 @@ export default function ContactUs() {
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">Get in Touch</h2>
               <p className="text-gray-600 mb-6">
-                Have questions about our services? Want to learn more about how we can help you find the perfect marine job or candidate? Fill out the form and we'll get back to you as soon as possible.
+                Have questions about our services? Want to learn more about how we can help you find the perfect marine job or candidate? Fill out the form and we&apos;ll get back to you as soon as possible.
               </p>
               
               <div className="space-y-4 mb-8">
@@ -157,7 +157,7 @@ export default function ContactUs() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <h3 className="text-xl font-semibold mb-2 text-gray-800">Thank You!</h3>
-                  <p className="text-gray-600 mb-4">Your message has been sent successfully. We'll get back to you shortly.</p>
+                  <p className="text-gray-600 mb-4">Your message has been sent successfully. We&apos;ll get back to you shortly.</p>
                   <div className="flex justify-center">
                     <button 
                       onClick={() => setSubmitSuccess(false)}
@@ -290,5 +290,13 @@ export default function ContactUs() {
       </section>
 
     </MainLayout>
+  );
+}
+
+export default function ContactUs() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ContactUsContent />
+    </Suspense>
   );
 }

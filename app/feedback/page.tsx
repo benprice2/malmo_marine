@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import MainLayout from "../components/MainLayout";
 import { useSearchParams } from "next/navigation"; 
 
-export default function Feedback() {
+function FeedbackContent() {
   const searchParams = useSearchParams();
   
   const [formData, setFormData] = useState({
@@ -97,7 +97,7 @@ export default function Feedback() {
             Your <span className="text-[#E91E63]">Feedback</span>
           </h1>
           <p className="text-center text-gray-600 mt-4 max-w-2xl mx-auto">
-            We value your input! Whether you've found a bug, have a suggestion, or want to share an idea, 
+            We value your input! Whether you&apos;ve found a bug, have a suggestion, or want to share an idea, 
             we want to hear from you.
           </p>
         </div>
@@ -332,5 +332,13 @@ export default function Feedback() {
         </div>
       </section>
     </MainLayout>
+  );
+}
+
+export default function Feedback() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <FeedbackContent />
+    </Suspense>
   );
 }

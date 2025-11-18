@@ -50,8 +50,8 @@ function SignUpForm() {
         router.push("/auth/signin");
       }, 1500);
       
-    } catch (_error) {
-      setError("An error occurred. Please try again.");
+    } catch (error) {
+      setError("An error occurred. Please try again." + (error as Error).message);
       setIsLoading(false);
     }
   };

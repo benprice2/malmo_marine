@@ -129,7 +129,7 @@ export default function JobsPage() {
             Marine <span className="text-[#E91E63]">Jobs</span>
           </h1>
           <p className="text-center text-gray-600 mt-4 max-w-2xl mx-auto">
-            Find your perfect role in the maritime industry with Malmo Marine's job listings
+            Find your perfect role in the maritime industry with Malmo Marine&apos;s job listings
           </p>
         </div>
       </section>

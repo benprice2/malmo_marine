@@ -21,8 +21,8 @@ export default function AboutUs() {
               <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">Our Story</h2>
               <p className="text-gray-600 mb-4">
                 Malmo Marine exists to give mariners clarity and direction in their careers – whether
-                they're at sea or land based. We believe every seafarer deserves access to
-                transparent, practical career pathways that show exactly what's next and how to get
+                they&apos;re at sea or land based. We believe every seafarer deserves access to
+                transparent, practical career pathways that show exactly what&apos;s next and how to get
                 there.
               </p>
               <p className="text-gray-600 mb-4">
@@ -63,17 +63,17 @@ export default function AboutUs() {
             </p>
             <p className="text-gray-600 mb-6">
               Our network ensures maritime-specific jobs reach the right candidates — and the
-              right candidates apply for the right roles. No more "Heavy Diesel Mechanic" when
-              you search "Maritime Engineer," and no more "Forklift-certified, fresh-out-of-high-
-              school 19-year-olds" applying for "Chief Engineer" on your 500GT vessel.
+              right candidates apply for the right roles. No more &quot;Heavy Diesel Mechanic&quot; when
+              you search &quot;Maritime Engineer,&quot; and no more &quot;Forklift-certified, fresh-out-of-high-
+              school 19-year-olds&quot; applying for &quot;Chief Engineer&quot; on your 500GT vessel.
             </p>
             <p className="text-gray-600 mb-6">
-              Shaped with feedback from professionals across New Zealand's maritime industry —
+              Shaped with feedback from professionals across New Zealand&apos;s maritime industry —
               from major fishing companies to local boat builders — Malmo Marine was created to
               bridge the shores between employers and employees.
             </p>
             <p className="text-gray-600 font-semibold text-center text-lg">
-              We are your seamen when you need 'em.
+              We are your seamen when you need &apos;em.
             </p>
             <div className="flex justify-center mt-6">
               <div className="w-20 h-1 bg-[#E91E63] rounded-full"></div>
@@ -97,7 +97,7 @@ export default function AboutUs() {
               </div>
               <h3 className="text-xl font-semibold mb-2 text-gray-800">Excellence</h3>
               <p className="text-gray-600">
-                We strive for excellence in everything we do, from our platform's functionality to the quality of opportunities we help create.
+                We strive for excellence in everything we do, from our platform&apos;s functionality to the quality of opportunities we help create.
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
@@ -119,7 +119,7 @@ export default function AboutUs() {
               </div>
               <h3 className="text-xl font-semibold mb-2 text-gray-800">Innovation</h3>
               <p className="text-gray-600">
-                We continuously innovate our platform and services to better serve the evolving needs of New Zealand's marine industry.
+                We continuously innovate our platform and services to better serve the evolving needs of New Zealand&apos;s marine industry.
               </p>
             </div>
           </div>

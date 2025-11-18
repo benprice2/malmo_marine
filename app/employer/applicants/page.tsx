@@ -2,7 +2,15 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import Image from "next/image";
+
+type Applicant = {
+  id: string;
+  jobId: string;
+  name: string;
+  email: string;
+  appliedAt: string;
+  cvUrl: string | null;
+};
 
 // Mock data for jobs
 const mockJobs = [
@@ -12,7 +20,7 @@ const mockJobs = [
 ];
 
 // Mock data for applicants
-const mockApplicants = [
+const mockApplicants: Applicant[] = [
   {
     id: "1",
     jobId: "1",
@@ -71,7 +79,7 @@ function ApplicantsList() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [showContactModal, setShowContactModal] = useState(false);
-  const [selectedApplicant, setSelectedApplicant] = useState<any>(null);
+  const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(null);
 
   useEffect(() => {
     if (jobIdParam) {
