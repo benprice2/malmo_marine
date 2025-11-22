@@ -39,21 +39,20 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
             <div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-gray-800">
-                WHERE&apos;S YOUR <span className="text-[#E91E63]">SEAMEN</span>
-              </h1>             
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-gray-800">
-                WHEN YOU <span className="text-[#E91E63]">NEED&apos;EM?</span>
+                Your maritime career, all in one place
               </h1>
-              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8">
-                Connecting marine professionals with the best opportunities across New Zealand.
-                Whether you&apos;re looking for work or hiring talent, we&apos;ve got you covered.
+              <h2 className="text-md sm:text-lg md:text-xl font-bold mb-4 sm:mb-6 text-gray-600">
+                Malmo Marine is the place for all your maritime career needs. From job searching to mapping your career trajectory, storing qualifications, and logging sea-time.
+              </h2>
+              <p className="text-xl sm:text-2xl text-[#E91E63] mb-6 sm:mb-8 italic">
+                We are your seamen when you need &apos;em.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <Link href="/auth/signup?role=employer" className="btn-primary text-center">
-                  Post a Job
+                <Link href="/auth/signup" className="btn-primary text-center">
+                  Sign Up
                 </Link>
-                <Link href="/jobs" className="btn-outline text-center">
-                  Find Jobs
+                <Link href="/auth/signin" className="btn-outline text-center">
+                  Sign In
                 </Link>
               </div>
             </div>

@@ -3,11 +3,13 @@
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Logo from "./Logo";
 
 const Navigation = () => {
   const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -21,21 +23,38 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
+            <Link href="/" className="text-gray-700 hover:text-[#E91E63]">
+              Home
+            </Link>
+            <Link href="/about" className="text-gray-700 hover:text-[#E91E63]">
+              About
+            </Link>
+            <Link href="/jobs" className="text-gray-700 hover:text-[#E91E63]">
+              Jobs
+            </Link>
+            <Link href="/contact" className="text-gray-700 hover:text-[#E91E63]">
+              Contact
+            </Link>
+            <Link href="/feedback" className="text-gray-700 hover:text-[#E91E63]">
+              Feedback
+            </Link>
             {!session ? (
-              <>
-                <Link
-                  href="/auth/signin"
-                  className="btn-outline"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href="/auth/signup"
-                  className="btn-primary"
-                >
-                  Sign Up
-                </Link>
-              </>
+              pathname !== '/' ? (
+                <>
+                  <Link
+                    href="/auth/signin"
+                    className="btn-outline"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/auth/signup"
+                    className="btn-primary"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              ) : null
             ) : session.user.role === "EMPLOYER" ? (
               <>
                 <Link href="/employer/jobs" className="text-gray-700 hover:text-[#E91E63]">
