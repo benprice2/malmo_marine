@@ -1,13 +1,20 @@
 "use client";
 
 import { useSession, signOut } from "next-auth/react";
+import { Session } from "next-auth";
+
+interface CustomSession extends Session {
+  user: {
+    role: string;
+  } & Session["user"];
+}
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
 
 const Navigation = () => {
-  const { data: session } = useSession();
+  const { data: session } = useSession() as { data: CustomSession | null };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
@@ -29,9 +36,11 @@ const Navigation = () => {
             <Link href="/about" className="text-gray-700 hover:text-[#E91E63]">
               About
             </Link>
-            <Link href="/jobs" className="text-gray-700 hover:text-[#E91E63]">
-              Jobs
-            </Link>
+            {(!session || session.user.role !== "EMPLOYER") && (
+              <Link href="/jobs" className="text-gray-700 hover:text-[#E91E63]">
+                Jobs
+              </Link>
+            )}
             <Link href="/contact" className="text-gray-700 hover:text-[#E91E63]">
               Contact
             </Link>
@@ -68,7 +77,7 @@ const Navigation = () => {
                 </Link>
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
-                  className="text-gray-700 hover:text-[#E91E63]"
+                  className="bg-[#E91E63] text-white px-4 py-2 rounded-md hover:bg-[#D81B60] transition-colors"
                 >
                   Sign Out
                 </button>
@@ -86,7 +95,7 @@ const Navigation = () => {
                 </Link>
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
-                  className="text-gray-700 hover:text-[#E91E63]"
+                  className="bg-[#E91E63] text-white px-4 py-2 rounded-md hover:bg-[#D81B60] transition-colors"
                 >
                   Sign Out
                 </button>
@@ -153,13 +162,15 @@ const Navigation = () => {
               >
                 About
               </Link>
-              <Link
-                href="/jobs"
-                className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
-                onClick={toggleMenu}
-              >
-                Jobs
-              </Link>
+              {(!session || session.user.role !== "EMPLOYER") && (
+                <Link
+                  href="/jobs"
+                  className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                  onClick={toggleMenu}
+                >
+                  Jobs
+                </Link>
+              )}
               <Link
                 href="/contact"
                 className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
@@ -210,7 +221,7 @@ const Navigation = () => {
                   signOut({ callbackUrl: "/" });
                   toggleMenu();
                 }}
-                className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                className="block w-full text-left py-2 px-4 bg-[#E91E63] text-white rounded-md hover:bg-[#D81B60] transition-colors mx-4"
               >
                 Sign Out
               </button>
@@ -243,7 +254,7 @@ const Navigation = () => {
                   signOut({ callbackUrl: "/" });
                   toggleMenu();
                 }}
-                className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
+                className="block w-full text-left py-2 px-4 bg-[#E91E63] text-white rounded-md hover:bg-[#D81B60] transition-colors mx-4"
               >
                 Sign Out
               </button>
