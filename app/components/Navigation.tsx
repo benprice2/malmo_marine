@@ -2,29 +2,18 @@
 
 import { useSession, signOut } from "next-auth/react";
 import { Session } from "next-auth";
-import { DefaultSession } from "next-auth";
 
-type CustomUser = {
-  id: string;
-  role: string;
-  company?: string;
-  cvUrl?: string;
-  name?: string | null;
-  email?: string | null;
-  image?: string | null;
-}
-
-type CustomSession = Session & {
-  user: CustomUser;
-}
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
 
 const Navigation = () => {
-  const { data: session } = useSession() as { data: CustomSession | null };
-  const isEmployer = session?.user?.role === "EMPLOYER";
+  const { data: session } = useSession();
+
+  const isEmployer = (session: Session | null): boolean => {
+    return session?.user?.role === "EMPLOYER";
+  };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
@@ -46,7 +35,7 @@ const Navigation = () => {
             <Link href="/about" className="text-gray-700 hover:text-[#E91E63]">
               About
             </Link>
-            {!isEmployer && (
+            {!isEmployer(session) && (
               <Link href="/jobs" className="text-gray-700 hover:text-[#E91E63]">
                 Jobs
               </Link>
@@ -172,7 +161,7 @@ const Navigation = () => {
               >
                 About
               </Link>
-              {!isEmployer && (
+              {!isEmployer(session) && (
                 <Link
                   href="/jobs"
                   className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
