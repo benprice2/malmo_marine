@@ -45,8 +45,8 @@ export default function Home() {
                 Malmo Marine is the place for all your maritime career needs. From job searching to mapping your career trajectory, storing qualifications, and logging sea-time.
               </h2>
               <p className="text-xl sm:text-2xl text-[#E91E63] mb-6 sm:mb-8 italic">
-                We are your seamen when you need &apos;em.
               </p>
+                We are your seamen when you need &apos;em.
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <Link href="/auth/signup" className="btn-primary text-center">
                   Sign Up
