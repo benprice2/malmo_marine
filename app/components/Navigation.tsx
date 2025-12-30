@@ -2,11 +2,20 @@
 
 import { useSession, signOut } from "next-auth/react";
 import { Session } from "next-auth";
+import { DefaultSession } from "next-auth";
 
-interface CustomSession extends Session {
-  user: {
-    role: string;
-  } & Session["user"];
+type CustomUser = {
+  id: string;
+  role: string;
+  company?: string;
+  cvUrl?: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+}
+
+type CustomSession = Session & {
+  user: CustomUser;
 }
 import Link from "next/link";
 import { useState } from "react";
@@ -15,6 +24,7 @@ import Logo from "./Logo";
 
 const Navigation = () => {
   const { data: session } = useSession() as { data: CustomSession | null };
+  const isEmployer = session?.user?.role === "EMPLOYER";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
@@ -36,7 +46,7 @@ const Navigation = () => {
             <Link href="/about" className="text-gray-700 hover:text-[#E91E63]">
               About
             </Link>
-            {(!session || session.user.role !== "EMPLOYER") && (
+            {!isEmployer && (
               <Link href="/jobs" className="text-gray-700 hover:text-[#E91E63]">
                 Jobs
               </Link>
@@ -162,7 +172,7 @@ const Navigation = () => {
               >
                 About
               </Link>
-              {(!session || session.user.role !== "EMPLOYER") && (
+              {!isEmployer && (
                 <Link
                   href="/jobs"
                   className="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md"
